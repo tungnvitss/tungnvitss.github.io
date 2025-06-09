@@ -46,7 +46,6 @@ Assigned to: ThemeForest
 			this.window_scroll();
 			this.scroll_contact();
 			this.read_more();
-			
 		},
 		
 		/*-------------- CV Portfolio Functions Calling ---------------------------------------------------
@@ -617,12 +616,12 @@ Assigned to: ThemeForest
 		if($('.ex_btn').length > 0){
 			$('.ex_btn').on('click', function() {
 				$(".more_content").not($(this).siblings(".more_content")).slideUp();
-				$(".ex_btn").not(this).text("Read More");
+				$(".ex_btn").not(this).text("Xem thêm");
 				$(this).siblings('.more_content').slideToggle();
-			  if ($(this).text() == "Read More") {
-				$(this).text("Read Less")
+			  if ($(this).text() == "Xem thêm") {
+				$(this).text("Thu gọn")
 			  } else {
-				$(this).text("Read More")
+				$(this).text("Xem thêm")
 			  }
 			});
 			 $('.ex_rightside').on('click', function(e) {
