@@ -1,3 +1,33 @@
+/*--------------------- Copyright (c) 2022 --------------------------
+[Master Stylesheet] 
+Project: Portfolio Responsive HTML Template
+Version: 1.0.6
+Assigned to: ThemeForest
+ ------------------------------------------------------------------- 
+[Table of contents] 
+01. Body 
+02. Reusable Css 
+03. Sidebar Css / .port_sidebar_wrapper 
+04. Banner Css / .port_bannerbg_wrapper
+05. About section Css / .port_about_setions
+06. Education section Css / .port_education_setions 
+07. Progress setions Css / .port_progress_setions 
+08. Experience setions Css / .port_experience_setions 
+09. Services setions Css / .port_services_setions 
+10. Projects_Setions Css / .port_projects_setions 
+11. Testimonial setions Css / .port_testimonial_setions  
+12. Blog setions Css / .port_blog_setions 
+13. sponsor setions Css / .port_responsor_setions  
+14. map setions Css / .port_map_setions  
+15. Contact setions Css / .port_contact_wrapper  
+16. footer setions Css / .port_footer_setions 
+17. Single blog setions  Css / .port_singleblog_wrapper 
+18. Go to top  Css / .bottom_top  
+19. custom scrollbar Css
+20. Media Query Css 
+
+--------------------------------------------------------------------*/
+/* ================== 01 body start ================== */
 body {
     margin: 0;
     font-family: 'Josefin Sans', sans-serif;

@@ -1,3 +1,14 @@
+/*--------------------- Copyright (c) 2019 -----------------------
+[Master Javascript]
+
+Project: Portfolio Responsive HTML Template
+Version: 1.0.6
+Assigned to: ThemeForest
+------------------------------------------------------------------
+
+
+------------------------------------------------------------------*/
+
 (function ($) {
 	"use strict";
 	var portfolio = {
@@ -606,12 +617,12 @@
 		if($('.ex_btn').length > 0){
 			$('.ex_btn').on('click', function() {
 				$(".more_content").not($(this).siblings(".more_content")).slideUp();
-				$(".ex_btn").not(this).text("Xem thêm");
+				$(".ex_btn").not(this).text("Read More");
 				$(this).siblings('.more_content').slideToggle();
-			  if ($(this).text() == "Xem thêm") {
-				$(this).text("Thu gọn")
+			  if ($(this).text() == "Read More") {
+				$(this).text("Read Less")
 			  } else {
-				$(this).text("Xem thêm")
+				$(this).text("Read More")
 			  }
 			});
 			 $('.ex_rightside').on('click', function(e) {
