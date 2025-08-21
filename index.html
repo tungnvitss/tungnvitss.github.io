@@ -37,6 +37,7 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" href="assets/css/scrollbar.css">
 	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png">
+	<script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
 <body>
@@ -263,12 +264,12 @@
 										</div>
 									</div>
 								</div>
-								<div class="left_deatils">
+								<div class="left_deatils" x-data="{ open: true }">
 									<div class="personal_details">
 										<h1 class="ps_name">Nguyễn Văn Tùng</h1>
 										<p class="ps_designation">Fullstack Develop</p>
 										<ul class="info-list">
-											<li><span class="title">Tuổi</span><span class="value">28</span></li>
+											<li><span class="title">Tuổi</span><span class="value" x-text="(new Date().getFullYear()) - 1996">28</span></li>
 
 											<li><span class="title">Địa chỉ</span><span class="value">Hà Nội, Việt Nam
 												</span></li>
