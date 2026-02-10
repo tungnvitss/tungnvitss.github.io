@@ -1,0 +1,207 @@
+<html><head><style>
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+ 
+}
+
+.game {
+  text-align: center;
+}
+
+.card {
+ width: 90vw;
+max-width: 280px;
+height: 380px;
+  perspective: 1200px;
+  margin-bottom: 80px;
+   
+}
+
+.card-face {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+  max-width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+
+  font-size: 20px;
+  font-weight: bold;
+
+  transition: 
+    transform 0.6s ease,
+    filter 0.4s ease,
+    opacity 0.4s ease;
+
+    background:url("/assets/bg-drink.jpg");
+
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Blur khi đang rút */
+.card.loading .card-face {
+  filter: blur(6px);
+  opacity: 0.3;
+}
+
+/* Lật thẻ 3D */
+.card.flip .card-face {
+  transform: rotateY(180deg);
+}
+
+/* Bounce khi hiện nội dung mới */
+@keyframes bounce {
+  0% { transform: scale(0.9); }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.card.show .card-face {
+  animation: bounce 0.4s ease;
+}
+
+button {
+  padding: 12px 26px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: none;
+  background: #22c55e;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #64748b;
+  cursor: not-allowed;
+}
+
+.btn-home {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  z-index: 1000;
+}
+
+.btn-home:active {
+  transform: scale(0.95);
+}
+@media (max-width: 768px) {
+
+  /* Thẻ bài to hơn */
+  .card {
+    width: 90vw;          /* gần full màn hình */
+    max-width: 340px;
+    height: 70vh;
+    max-height: 480px;
+  }
+
+  .card-face {
+    font-size: 24px;      /* chữ to hơn */
+    padding: 24px;
+  }
+
+  /* Nút rút thẻ to – dễ bấm */
+  #drawBtn {
+    width: 90vw;
+    max-width: 340px;
+    padding: 18px 0;
+    font-size: 22px;
+    border-radius: 16px;
+  }
+
+  /* Nút Home vẫn gọn */
+  .btn-home {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+  }
+}
+</style>
+</head><body><a href="/" class="btn-home" aria-label="Home">
+  🏠
+</a>
+
+<div class="game">
+  <div id="card" class="card">
+    <div class="card-face" id="cardText">
+      Nhấn Rút thẻ để bắt đầu
+    </div>
+  </div>
+  
+  <button id="drawBtn">🎴 Rút thẻ</button>
+</div>
+
+<script>
+const deck = ["\uD83D\uDE04 K\u1EC3 m\u1ED9t c\u00E2u chuy\u1EC7n x\u1EA5u h\u1ED5 nh\u1EA5t c\u1EE7a b\u1EA1n","\uD83E\uDD23 C\u01B0\u1EDDi li\u00EAn t\u1EE5c 10 gi\u00E2y kh\u00F4ng \u0111\u01B0\u1EE3c ng\u1EEBng","\uD83E\uDD2A L\u00E0m m\u1EB7t x\u1EA5u nh\u1EA5t c\u00F3 th\u1EC3","\uD83C\uDFA4 H\u00E1t 1 c\u00E2u b\u00E0i h\u00E1t b\u1EA5t k\u1EF3","\uD83D\uDC4B Ch\u00E0o ng\u01B0\u1EDDi b\u00EAn tr\u00E1i nh\u01B0 g\u1EB7p idol","\uD83D\uDC36 B\u1EAFt ch\u01B0\u1EDBc ti\u1EBFng ch\u00F3 ho\u1EB7c m\u00E8o","\uD83D\uDC83 Nh\u1EA3y freestyle 5 gi\u00E2y","\uD83D\uDCF8 T\u1EA1o d\u00E1ng ch\u1EE5p \u1EA3nh t\u01B0\u1EDFng t\u01B0\u1EE3ng","\uD83E\uDD21 Di\u1EC5n vai ch\u00FA h\u1EC1 trong 5 gi\u00E2y","\uD83E\uDDE0 N\u00F3i 5 qu\u1ED1c gia trong 3 gi\u00E2y","\uD83D\uDC40 Nh\u00ECn ch\u1EB1m ch\u1EB1m ng\u01B0\u1EDDi \u0111\u1ED1i di\u1EC7n 10 gi\u00E2y","\uD83D\uDE0E T\u1EA1o d\u00E1ng cool ng\u1EA7u nh\u1EA5t","\uD83C\uDFAD Di\u1EC5n l\u1EA1i m\u1ED9t meme n\u1ED5i ti\u1EBFng","\uD83D\uDC42 K\u1EC3 m\u1ED9t b\u00ED m\u1EADt v\u00F4 h\u1EA1i","\uD83D\uDE34 Gi\u1EA3 v\u1EDD ng\u1EE7 g\u1EADt","\uD83D\uDC14 B\u1EAFt ch\u01B0\u1EDBc ti\u1EBFng g\u00E0","\uD83E\uDDCD \u0110\u1EE9ng t\u1EA1o d\u00E1ng t\u01B0\u1EE3ng ng\u01B0\u1EDDi","\uD83D\uDE02 K\u1EC3 chuy\u1EC7n c\u01B0\u1EDDi (d\u00F9 kh\u00F4ng h\u00E0i)","\uD83C\uDFAC Di\u1EC5n c\u1EA3nh phim h\u00E0nh \u0111\u1ED9ng","\uD83E\uDE9E T\u1EF1 khen m\u00ECnh 3 \u0111i\u1EC3m","\uD83E\uDDE0 \u0110\u1ED1 nhanh: 7\u00D78 = ?","\uD83C\uDFA7 H\u00E1t kh\u00F4ng ra ti\u1EBFng","\uD83D\uDD90\uFE0F \u0110\u1EADp tay v\u1EDBi m\u1ECDi ng\u01B0\u1EDDi","\uD83D\uDE1C L\u00E8 l\u01B0\u1EE1i 5 gi\u00E2y","\uD83D\uDD7A Nh\u1EA3y robot","\uD83D\uDCE3 H\u00F4 to \u201CT\u00F4i l\u00E0 ng\u01B0\u1EDDi tuy\u1EC7t v\u1EDDi!\u201D","\uD83E\uDDE9 \u0110\u1ECDc ng\u01B0\u1EE3c t\u00EAn m\u00ECnh","\uD83D\uDC7B D\u1ECDa ng\u01B0\u1EDDi b\u00EAn ph\u1EA3i","\uD83E\uDD13 Gi\u1EA3 gi\u1ECDng gi\u00E1o vi\u00EAn","\uD83D\uDE06 C\u01B0\u1EDDi nh\u01B0 nh\u00E2n v\u1EADt ho\u1EA1t h\u00ECnh","\uD83C\uDF7A U\u1ED1ng 1 ng\u1EE5m HO\u1EB6C k\u1EC3 crush g\u1EA7n nh\u1EA5t","\uD83D\uDC8C Ti\u1EBFt l\u1ED9 ng\u01B0\u1EDDi b\u1EA1n t\u1EEBng th\u00EDch","\uD83D\uDCF1 Cho ng\u01B0\u1EDDi kh\u00E1c xem tin nh\u1EAFn g\u1EA7n nh\u1EA5t","\uD83D\uDE0F Nh\u1EAFn tin cho ai \u0111\u00F3: \u201CT\u00F4i nh\u1EDB b\u1EA1n\u201D","\uD83E\uDEE3 K\u1EC3 m\u1ED9t l\u1EA7n n\u00F3i d\u1ED1i v\u00E0 b\u1ECB ph\u00E1t hi\u1EC7n","\uD83D\uDD25 Ai trong ph\u00F2ng h\u1EA5p d\u1EABn nh\u1EA5t?","\uD83D\uDDE3\uFE0F N\u00F3i s\u1EF1 th\u1EADt v\u1EC1 ng\u01B0\u1EDDi b\u00EAn ph\u1EA3i","\uD83D\uDC8B H\u00F4n gi\u00F3 ng\u01B0\u1EDDi \u0111\u1ED1i di\u1EC7n","\uD83E\uDD25 N\u00F3i 2 th\u1EADt 1 gi\u1EA3","\uD83C\uDFAD Di\u1EC5n c\u1EA3nh t\u1ECF t\u00ECnh th\u1EA5t b\u1EA1i","\uD83D\uDC44 \u0110\u1ECDc to c\u00E2u cu\u1ED1i c\u00F9ng b\u1EA1n nh\u1EAFn","\uD83C\uDF77 U\u1ED1ng HO\u1EB6C \u0111\u1EC3 ng\u01B0\u1EDDi kh\u00E1c \u0111\u1EB7t th\u1EED th\u00E1ch","\uD83E\uDEE0 K\u1EC3 chuy\u1EC7n say x\u1EC9n g\u1EA7n nh\u1EA5t","\uD83D\uDCF8 \u0110\u0103ng story \u201CT\u00F4i \u0111ang ch\u01A1i Do Or Drink\u201D","\uD83E\uDDE0 Ai l\u00E0 ng\u01B0\u1EDDi hay say nh\u1EA5t nh\u00F3m?","\uD83D\uDE08 K\u1EC3 m\u1ED9t suy ngh\u0129 t\u1ED9i l\u1ED7i","\uD83D\uDC40 Ai b\u1EA1n kh\u00F4ng mu\u1ED1n g\u1EB7p l\u1EA1i?","\uD83D\uDC94 K\u1EC3 chuy\u1EC7n chia tay","\uD83E\uDEE6 Th\u1EA3 th\u00EDnh c\u1EA3 nh\u00F3m","\uD83D\uDDEF\uFE0F N\u00F3i \u0111i\u1EC1u b\u1EA1n gh\u00E9t nh\u1EA5t v\u1EC1 b\u1EA3n th\u00E2n","\uD83C\uDFA4 H\u00E1t b\u00E0i h\u00E1t th\u1EA5t t\u00ECnh","\uD83E\uDD74 U\u1ED1ng g\u1EA5p \u0111\u00F4i ho\u1EB7c tr\u1EA3 l\u1EDDi c\u00E2u h\u1ECFi ri\u00EAng t\u01B0","\uD83E\uDD2B Ai l\u00E0 ng\u01B0\u1EDDi b\u1EA1n t\u1EEBng n\u00F3i x\u1EA5u?","\uD83D\uDCDE G\u1ECDi cho ng\u01B0\u1EDDi b\u1EA5t k\u1EF3 (10 gi\u00E2y)","\uD83D\uDE35 K\u1EC3 m\u1ED9t l\u1EA7n ngu nh\u1EA5t","\uD83E\uDDCD \u0110\u1ED5i ch\u1ED7 ng\u1ED3i v\u1EDBi ng\u01B0\u1EDDi kh\u00E1c","\uD83E\uDEF6 Ai trong ph\u00F2ng b\u1EA1n tin t\u01B0\u1EDFng nh\u1EA5t?","\uD83D\uDD25 K\u1EC3 m\u1ED9t b\u00ED m\u1EADt ch\u01B0a ai bi\u1EBFt","\uD83C\uDF7B U\u1ED1ng thay cho ng\u01B0\u1EDDi kh\u00E1c","\uD83D\uDE2C K\u1EC3 m\u1ED9t kho\u1EA3nh kh\u1EAFc cringe","\uD83D\uDC80 U\u1ED1ng 2 ng\u1EE5m HO\u1EB6C tr\u1EA3 l\u1EDDi c\u00E2u h\u1ECFi 18\u002B","\uD83D\uDD25 Ai b\u1EA1n mu\u1ED1n h\u00F4n nh\u1EA5t trong ph\u00F2ng?","\uD83D\uDE08 K\u1EC3 m\u1ED9t b\u00ED m\u1EADt \u0111en t\u1ED1i","\uD83C\uDF7A U\u1ED1ng h\u1EBFt ly HO\u1EB6C \u0111\u1EC3 nh\u00F3m ch\u1ECDn h\u00ECnh ph\u1EA1t","\uD83D\uDC44 M\u00F4 t\u1EA3 n\u1EE5 h\u00F4n \u0111\u00E1ng nh\u1EDB nh\u1EA5t","\uD83D\uDECF\uFE0F K\u1EC3 tr\u1EA3i nghi\u1EC7m t\u00E1o b\u1EA1o nh\u1EA5t","\uD83D\uDCF1 Cho xem gallery \u1EA3nh g\u1EA7n nh\u1EA5t","\uD83D\uDE0F Ai b\u1EA1n t\u1EEBng mu\u1ED1n t\u00E1n nh\u01B0ng kh\u00F4ng d\u00E1m?","\uD83D\uDCA3 Tr\u1EA3 l\u1EDDi th\u1EADt ho\u1EB7c u\u1ED1ng g\u1EA5p \u0111\u00F4i","\uD83E\uDEE6 Di\u1EC5n c\u1EA3nh quy\u1EBFn r\u0169","\uD83D\uDD25 K\u1EC3 m\u1ED9t fantasy (v\u1EEBa ph\u1EA3i \uD83D\uDE06)","\uD83C\uDF77 U\u1ED1ng li\u00EAn t\u1EE5c 5 gi\u00E2y","\uD83E\uDDE0 Ai trong ph\u00F2ng khi\u1EBFn b\u1EA1n t\u00F2 m\u00F2 nh\u1EA5t?","\uD83D\uDE08 Th\u1EEBa nh\u1EADn m\u1ED9t \u0111i\u1EC1u ch\u01B0a t\u1EEBng n\u00F3i","\uD83E\uDEE3 K\u1EC3 m\u1ED9t l\u1EA7n b\u1ECB b\u1EAFt qu\u1EA3 tang","\uD83D\uDCE3 N\u00F3i to \u0111i\u1EC1u b\u1EA1n mu\u1ED1n l\u00E0m nh\u1EA5t hi\u1EC7n t\u1EA1i","\uD83D\uDCA5 U\u1ED1ng thay cho ng\u01B0\u1EDDi y\u1EBFu nh\u1EA5t","\uD83D\uDDA4 Ai b\u1EA1n t\u1EEBng gh\u00E9t m\u00E0 gi\u1EDD th\u1EA5y \u1ED5n?","\uD83D\uDE35 K\u1EC3 l\u1EA7n say n\u1EB7ng nh\u1EA5t","\uD83D\uDD25 Th\u1EBB cu\u1ED1i: U\u1ED0NG HO\u1EB6C TH\u00DA NH\u1EACN T\u1EA4T C\u1EA2 \uD83D\uDE08"];
+const card = document.getElementById("card");
+const cardText = document.getElementById("cardText");
+const btn = document.getElementById("drawBtn");
+
+btn.addEventListener("click", () => {
+  if (deck.length === 0) {
+    btn.innerText = "🎉 Game Over";
+    btn.disabled = true;
+    return;
+  }
+
+  btn.disabled = true;
+
+  // 1️⃣ Blur + mờ
+  card.classList.remove("show");
+  card.classList.add("loading");
+
+  // 2️⃣ Delay hồi hộp
+  setTimeout(() => {
+    card.classList.add("flip");
+  }, 300);
+
+  // 3️⃣ Rút thẻ + lật
+  setTimeout(() => {
+    const index = Math.floor(Math.random() * deck.length);
+    cardText.innerText = deck[index];
+    deck.splice(index, 1);
+
+    card.classList.remove("loading");
+    card.classList.remove("flip");
+    card.classList.add("show");
+
+    btn.disabled = false;
+  }, 800);
+});
+</script>
+</body></html>
